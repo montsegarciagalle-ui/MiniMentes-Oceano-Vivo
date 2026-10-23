@@ -1,0 +1,340 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MiniMentes · Una aventura bajo el mar</title><style>
+:root{font-family:ui-rounded,'Trebuchet MS',system-ui,sans-serif;color:#103d62;background:#dff9ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 10% 15%,#a5ecff 0,transparent 40%),linear-gradient(180deg,#9be6f8,#c5f7f4 65%,#ffe9b4);overflow-x:hidden}.bubble{position:fixed;border:2px solid #ffffff80;border-radius:50%;background:#ffffff22;animation:rise 15s linear infinite;pointer-events:none;z-index:0}@keyframes rise{from{transform:translateY(110vh)}to{transform:translateY(-30vh)}}main{position:relative;max-width:1030px;margin:auto;padding:22px 16px 90px;z-index:1}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.logo{font-size:clamp(23px,4vw,34px);font-weight:1000;color:#086d9b;text-shadow:0 2px white}.pill,.btn{border:0;border-radius:999px;background:white;color:#116b91;padding:12px 18px;font-weight:900;font-size:15px;box-shadow:0 5px 0 #8ac6d1;cursor:pointer}.btn{background:#ffda66;color:#69461c;box-shadow:0 6px 0 #dca94b;transition:transform .15s}.btn:hover,.option:hover,.level:hover{transform:translateY(-3px)}.btn:active,.option:active{transform:translateY(3px)}.btn.secondary{background:white;color:#116b91;box-shadow:0 5px 0 #8ac6d1}.btn:disabled{opacity:.5;cursor:not-allowed}.panel{background:#ffffffdf;border:4px solid #fff;border-radius:34px;box-shadow:0 15px 40px #277d9530;padding:clamp(18px,4vw,36px);margin-top:25px}.center{text-align:center}.hero{font-size:clamp(70px,15vw,140px);filter:drop-shadow(0 12px 4px #2d9aa333);animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-9px)}}h1{font-size:clamp(30px,5vw,55px);line-height:1.1;margin:10px 0;color:#08739b}h2{font-size:clamp(23px,4vw,34px);color:#08739b;margin:8px 0}p{line-height:1.5;font-size:17px}.small{font-size:14px;color:#4c7890}.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px}.level{cursor:pointer;border:3px solid #fff;border-radius:25px;padding:20px 10px;background:linear-gradient(155deg,#e5fff9,#a9ecff);box-shadow:0 8px 0 #8bcad2;transition:transform .15s;color:#125b7c}.level .animal{font-size:65px}.level strong{display:block;font-size:20px}.level .tiny{font-size:13px}.level.locked{opacity:.6;filter:grayscale(.5)}.progress{height:15px;background:#c4e7e9;border-radius:30px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,#24bca8,#6ce69b);transition:width .4s}.tag{display:inline-block;background:#d9f4ff;color:#086e98;border-radius:99px;padding:8px 14px;font-weight:900;font-size:13px}.visual{min-height:175px;border-radius:26px;background:linear-gradient(#d8faff,#f3fffa);border:3px dashed #9edfe9;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px;flex-wrap:wrap;margin:19px 0}.sceneItem{font-size:clamp(40px,7vw,80px);display:inline-flex;align-items:center;justify-content:center;filter:drop-shadow(0 5px 2px #3d9cb333)}.sceneItem.sm{font-size:36px}.sceneItem.lg{font-size:95px}.sceneItem.xs{font-size:27px}.sceneGroup{padding:10px;background:#ffffff9e;border-radius:20px;display:flex;align-items:center;justify-content:center;gap:5px;min-width:100px;flex-wrap:wrap}.visual .arrow{font-size:34px;color:#20a8b0}.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:13px;margin:20px 0}.option{border:3px solid #b9e7f2;border-radius:20px;padding:20px 12px;min-height:78px;background:#fff;color:#205a74;font-size:18px;font-weight:900;cursor:pointer;transition:.15s}.option.wrong{background:#fff1d7;border-color:#ffb65d}.option.right{background:#d7ffdf;border-color:#37c786}.feedback{border-radius:20px;background:#e2f8ff;padding:15px 20px;font-weight:800;min-height:55px}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}.stars{font-size:34px;letter-spacing:8px}.footer{margin-top:20px;text-align:center;color:#407a8b;font-size:13px}.muted{color:#53869c}.hide{display:none!important}.float{animation:bob 3s ease-in-out infinite}.note{border-left:5px solid #53c4cc;padding:10px 14px;background:#e8fbfb;border-radius:8px;text-align:left}.confetti{position:fixed;inset:0;pointer-events:none;z-index:10;overflow:hidden}.confetti i{position:absolute;top:-30px;font-size:24px;animation:fall 2.8s linear forwards}@keyframes fall{to{transform:translateY(115vh) rotate(500deg)}}@media(max-width:620px){.levels{grid-template-columns:repeat(2,1fr)}.panel{border-radius:24px}.level .animal{font-size:48px}.options{grid-template-columns:1fr}.top{flex-wrap:wrap}.sceneItem{font-size:47px}.visual{min-height:140px}}
+
+/* Edición océano vivo */
+.ocean-life{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}.swimmer{position:absolute;font-size:clamp(30px,5vw,65px);opacity:.68;animation:swim var(--dur) linear infinite;top:var(--top)}.swimmer.reverse{animation-name:swimreverse}@keyframes swim{0%{transform:translateX(-15vw) scaleX(-1)}100%{transform:translateX(115vw) scaleX(-1)}}@keyframes swimreverse{0%{transform:translateX(115vw)}100%{transform:translateX(-15vw)}}
+.musicbtn{background:#f0faff}.mascot{display:inline-block;animation:wiggle 2.4s ease-in-out infinite}@keyframes wiggle{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(7deg) translateY(-12px)}}.visual .sceneItem:nth-child(2n){animation:bob 2s ease-in-out infinite}.visual .sceneItem:nth-child(2n+1){animation:bob 2.8s ease-in-out infinite;animation-delay:-1s}
+.diploma{background:linear-gradient(145deg,#fffef1,#e0fcff);border:9px double #e0b94b;border-radius:25px;padding:26px;max-width:730px;margin:18px auto;color:#126583;box-shadow:0 12px 25px #18698c25}.diploma h2{font-size:clamp(26px,5vw,44px)}.diploma .student{font-size:clamp(24px,5vw,40px);color:#c17d18;font-weight:1000;border-bottom:3px solid #e7c96e;padding:10px}.nameinput{border:3px solid #8ad7e5;border-radius:16px;padding:14px;font:inherit;font-size:18px;width:min(100%,380px)}.subhint{font-size:13px;color:#397d92}
+@media print{body{background:white!important}.top,.footer,.actions,.ocean-life,#bubbles,.bubble,.musicbtn,.no-print{display:none!important}main{padding:0;max-width:none}.panel{box-shadow:none;border:0;margin:0}.diploma{box-shadow:none;break-inside:avoid;min-height:75vh;display:flex;flex-direction:column;justify-content:center}#app>.panel>*:not(.diploma):not(.print-only){display:none!important}}
+@media(prefers-reduced-motion:reduce){.swimmer,.mascot,.sceneItem,.bubble{animation:none!important}}
+</style><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#08739b"></head><body><div id="bubbles"></div><div class="ocean-life" aria-hidden="true"><span class="swimmer" style="--top:19%;--dur:29s">🐠</span><span class="swimmer reverse" style="--top:65%;--dur:36s;animation-delay:-14s">🐬</span><span class="swimmer" style="--top:82%;--dur:43s;animation-delay:-22s">🐢</span><span class="swimmer reverse" style="--top:38%;--dur:32s;animation-delay:-7s">🐟</span></div><main><div class="top"><div class="logo">🐢 MiniMentes <span style="font-size:15px">🌊</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill musicbtn" id="music" onclick="toggleMusic()" aria-label="Activar o desactivar música">🎵 Música: no</button><button class="pill" id="sound" onclick="toggleSound()">🔊 Voz: sí</button><button class="pill" onclick="showMap()">🗺️ Mapa</button></div></div><div id="app"></div><div class="footer">Una aventura bajo el mar · Juego educativo de exploración cognitiva · 2 a 7 años<br>Actividad orientativa: cada niño aprende a su ritmo y puede recibir ayuda de una persona adulta.</div></main><div class="confetti" id="confetti"></div><script>
+const DATA=[
+  {
+    "level": 0,
+    "skill": 0,
+    "question": "¿Cuál de estos peces es AZUL?",
+    "options": [
+      "Pez azul",
+      "Pez naranja",
+      "Pez rosa"
+    ],
+    "hint": "Mira el color de cada pez.",
+    "answer": 0
+  },
+  {
+    "level": 0,
+    "skill": 1,
+    "question": "¿Cuál concha es MÁS GRANDE?",
+    "options": [
+      "Concha pequeña",
+      "Concha grande"
+    ],
+    "hint": "Compara los dos tamaños.",
+    "answer": 1
+  },
+  {
+    "level": 0,
+    "skill": 2,
+    "question": "Hay 2 perlas. Si las separamos, ¿cuántas quedan?",
+    "options": [
+      "2 perlas",
+      "3 perlas",
+      "1 perla"
+    ],
+    "hint": "Separarlas no agrega perlas.",
+    "answer": 0
+  },
+  {
+    "level": 0,
+    "skill": 3,
+    "question": "¿Cuál pez es más grande?",
+    "options": [
+      "Pez pequeño",
+      "Pez grande"
+    ],
+    "hint": "Observa los tamaños directamente.",
+    "answer": 1
+  },
+  {
+    "level": 1,
+    "skill": 0,
+    "question": "¿Qué dos animales son del mismo tipo?",
+    "options": [
+      "Dos peces",
+      "Pez y estrella",
+      "Tortuga y concha"
+    ],
+    "hint": "Busca dos animales iguales en su tipo.",
+    "answer": 0
+  },
+  {
+    "level": 1,
+    "skill": 1,
+    "question": "¿Qué orden va de pequeño a grande?",
+    "options": [
+      "Pequeño · mediano · grande",
+      "Grande · pequeño · mediano",
+      "Mediano · grande · pequeño"
+    ],
+    "hint": "Comienza por el más pequeño.",
+    "answer": 0
+  },
+  {
+    "level": 1,
+    "skill": 2,
+    "question": "3 perlas juntas se separan. ¿Cuántas hay ahora?",
+    "options": [
+      "4",
+      "3",
+      "2"
+    ],
+    "hint": "Cuenta las perlas una a una.",
+    "answer": 1
+  },
+  {
+    "level": 1,
+    "skill": 3,
+    "question": "La tortuga A es grande; B es pequeña. ¿Cuál es mayor?",
+    "options": [
+      "Tortuga A",
+      "Tortuga B"
+    ],
+    "hint": "Primero compara dos objetos visibles.",
+    "answer": 0
+  },
+  {
+    "level": 2,
+    "skill": 0,
+    "question": "¿Qué grupo contiene SOLO animales marinos?",
+    "options": [
+      "Pez · pulpo · tortuga",
+      "Pez · barco · pulpo",
+      "Concha · barco · ancla"
+    ],
+    "hint": "Un barco no es un animal.",
+    "answer": 0
+  },
+  {
+    "level": 2,
+    "skill": 1,
+    "question": "Ordena 4 algas por altura. ¿Qué sigue después de la pequeña?",
+    "options": [
+      "La mediana pequeña",
+      "La más alta",
+      "La más baja"
+    ],
+    "hint": "La altura aumenta poco a poco.",
+    "answer": 0
+  },
+  {
+    "level": 2,
+    "skill": 2,
+    "question": "5 perlas en fila y 5 perlas separadas: ¿qué grupo tiene más?",
+    "options": [
+      "Fila larga",
+      "Tienen igual número",
+      "Fila corta"
+    ],
+    "hint": "La distancia no cambia el número.",
+    "answer": 1
+  },
+  {
+    "level": 2,
+    "skill": 3,
+    "question": "A es más largo que B; B es más largo que C. ¿Cuál es el menor?",
+    "options": [
+      "A",
+      "B",
+      "C"
+    ],
+    "hint": "Puedes comparar los tres dibujos.",
+    "answer": 2
+  },
+  {
+    "level": 3,
+    "skill": 0,
+    "question": "¿Cuál cumple DOS reglas: pez ROJO y PEQUEÑO?",
+    "options": [
+      "Pez rojo pequeño",
+      "Pez rojo grande",
+      "Pez azul pequeño"
+    ],
+    "hint": "Fíjate en color Y tamaño.",
+    "answer": 0
+  },
+  {
+    "level": 3,
+    "skill": 1,
+    "question": "Ordena: 2, 4, 1, 3 conchas. ¿Qué orden es creciente?",
+    "options": [
+      "1 · 2 · 3 · 4",
+      "4 · 3 · 2 · 1",
+      "1 · 3 · 2 · 4"
+    ],
+    "hint": "De menos conchas a más conchas.",
+    "answer": 0
+  },
+  {
+    "level": 3,
+    "skill": 2,
+    "question": "La misma arena pasa a un vaso alto. ¿Qué ocurre con su cantidad?",
+    "options": [
+      "Aumenta",
+      "No cambia",
+      "Disminuye"
+    ],
+    "hint": "No se agregó ni quitó arena.",
+    "answer": 1
+  },
+  {
+    "level": 3,
+    "skill": 3,
+    "question": "Coral es mayor que Azul y Azul mayor que Perla. ¿Quién es mayor?",
+    "options": [
+      "Perla",
+      "Azul",
+      "Coral"
+    ],
+    "hint": "Une las dos comparaciones.",
+    "answer": 2
+  },
+  {
+    "level": 4,
+    "skill": 0,
+    "question": "¿Qué conjunto es: AZUL y de forma REDONDA?",
+    "options": [
+      "Burbuja azul",
+      "Estrella azul",
+      "Burbuja roja"
+    ],
+    "hint": "Hay que cumplir ambos criterios.",
+    "answer": 0
+  },
+  {
+    "level": 4,
+    "skill": 1,
+    "question": "¿Qué secuencia está ordenada de menor a mayor?",
+    "options": [
+      "1 · 3 · 5 · 7 · 9",
+      "1 · 5 · 3 · 9 · 7",
+      "9 · 7 · 5 · 3 · 1"
+    ],
+    "hint": "Comprueba cada paso.",
+    "answer": 0
+  },
+  {
+    "level": 4,
+    "skill": 2,
+    "question": "Dos vasos iguales tienen la misma agua. Uno se vierte a un vaso estrecho. ¿Cuál tiene más?",
+    "options": [
+      "El estrecho",
+      "El ancho",
+      "La misma cantidad"
+    ],
+    "hint": "La altura del agua puede engañar.",
+    "answer": 2
+  },
+  {
+    "level": 4,
+    "skill": 3,
+    "question": "Submarino A > B y B > C en longitud. ¿Cuál es más largo?",
+    "options": [
+      "A",
+      "B",
+      "C"
+    ],
+    "hint": "Si A supera a B y B supera a C...",
+    "answer": 0
+  },
+  {
+    "level": 5,
+    "skill": 0,
+    "question": "Hay 4 peces y 2 tortugas. ¿Hay más PECES o ANIMALES?",
+    "options": [
+      "Peces",
+      "Animales",
+      "Igual"
+    ],
+    "hint": "Los peces también son animales.",
+    "answer": 1
+  },
+  {
+    "level": 5,
+    "skill": 1,
+    "question": "¿Cuál es el orden de 7 cofres por perlas?",
+    "options": [
+      "1 · 2 · 3 · 4 · 5 · 6 · 7",
+      "1 · 3 · 2 · 4 · 6 · 5 · 7",
+      "7 · 6 · 5 · 4 · 3 · 2 · 1"
+    ],
+    "hint": "Ordena de menor a mayor.",
+    "answer": 0
+  },
+  {
+    "level": 5,
+    "skill": 2,
+    "question": "Una bola de plastilina se aplasta sin quitar nada. ¿Tiene menos masa?",
+    "options": [
+      "Sí, menos",
+      "No, la misma",
+      "Sí, más"
+    ],
+    "hint": "Solo cambió la forma.",
+    "answer": 1
+  },
+  {
+    "level": 5,
+    "skill": 3,
+    "question": "A > B, B > C y C > D. ¿Cuál es el segundo más grande?",
+    "options": [
+      "A",
+      "B",
+      "C"
+    ],
+    "hint": "Piensa en el orden A, B, C, D.",
+    "answer": 1
+  }
+];
+const SKILLS=['Clasificación','Seriación','Conservación','Transitividad'];
+const ICONS=['🐠','🐙','🫧','🐬'];
+const WORLDS=['La orilla del mar','El arrecife de colores','La cueva de las conchas','El bosque de algas','El barco hundido','El tesoro de las cuatro perlas'];
+const ANIMALS=['🐚','🐠','🦀','🐙','🐢','🐬'];
+let sound=true,level=0,step=0,chosen=-1,done=false;
+let saved;try{saved=JSON.parse(localStorage.getItem('minimentes_progress')||'{}')}catch(e){saved={}};
+const completed=new Set(Array.isArray(saved.completed)?saved.completed:[]);
+function save(){try{localStorage.setItem('minimentes_progress',JSON.stringify({completed:[...completed]}))}catch(e){}}
+function bubbles(){let s='';for(let i=0;i<21;i++)s+=`<div class="bubble" style="left:${(i*43)%99}%;width:${14+(i*17)%42}px;height:${14+(i*17)%42}px;animation-delay:-${(i*7)%16}s;animation-duration:${11+i%9}s"></div>`;document.getElementById('bubbles').innerHTML=s}bubbles();
+function speak(text){if(!sound||!('speechSynthesis' in window))return;window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang='es-MX';u.rate=.86;u.pitch=1.12;window.speechSynthesis.speak(u)}
+function toggleSound(){sound=!sound;document.getElementById('sound').textContent=sound?'🔊 Voz: sí':'🔇 Voz: no';if(!sound&&'speechSynthesis'in window)speechSynthesis.cancel()}
+function confetti(){const el=document.getElementById('confetti');el.innerHTML=Array.from({length:32},(_,i)=>`<i style="left:${Math.random()*100}%;animation-delay:${Math.random()*.6}s">${['⭐','🫧','💛','🐚'][i%4]}</i>`).join('');setTimeout(()=>el.innerHTML='',3400)}
+function home(){document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🐢🪸</div><span class="tag">¡Hola! Soy Marina, tu guía submarina</span><h1>Una aventura bajo el mar</h1><p>¡Ayúdame a recuperar las cuatro perlas mágicas!<br>Exploraremos, compararemos y resolveremos retos bajo el océano.</p><div class="stars">🐠 🐙 🫧 🐬</div><div class="actions"><button class="btn" onclick="showMap()">¡Comenzar aventura! ➜</button></div><p class="small">24 actividades · 6 niveles · 4 habilidades cognitivas</p></section>`;speak('¡Hola! Soy Marina, tu guía submarina. ¡Vamos a explorar el océano!')}
+function showMap(){document.getElementById('app').innerHTML=`<section class="panel center"><h1>🗺️ Mapa submarino</h1><p>Elige tu nivel. Puedes comenzar por el que prefieras o seguir la aventura en orden.</p><div class="levels">${WORLDS.map((w,i)=>{let n=[0,1,2,3].filter(j=>completed.has(i*4+j)).length;return `<button class="level" onclick="startLevel(${i})"><div class="animal">${ANIMALS[i]}</div><strong>Nivel ${i+1}</strong><div>${i+2} años</div><div class="tiny">${w}</div><div class="small">${n}/4 perlas ✨</div></button>`}).join('')}</div><div class="actions"><button class="btn secondary" onclick="home()">← Inicio</button><button class="btn secondary" onclick="if(confirm('¿Borrar las estrellas conseguidas y empezar de nuevo?')){completed.clear();save();showMap()}">↻ Reiniciar progreso</button></div></section>`}
+function startLevel(i){level=i;step=0;showQuestion()}
+function escapeHtml(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function elem(e,cls=''){return `<span class="sceneItem ${cls}">${e}</span>`}
+function grp(e,n){return `<div class="sceneGroup">${Array.from({length:n},()=>elem(e,'xs')).join('')}</div>`}
+function scene(i){let k=i%4,l=Math.floor(i/4);if(k===0){return [elem('🐟')+elem('🐠')+elem('🐡'),elem('🐟')+elem('🐟')+elem('⭐'),elem('🐠')+elem('🐙')+elem('🐢'),elem('🐟')+elem('🐠')+elem('🦀'),elem('🔵')+elem('⭐')+elem('🔴'),grp('🐟',4)+grp('🐢',2)][l]}
+if(k===1){return [elem('🐚','sm')+elem('🐚','lg'),elem('🐚','sm')+elem('🐚')+elem('🐚','lg'),elem('🌿','sm')+elem('🌿')+elem('🌿','lg'),grp('🐚',2)+grp('🐚',4),elem('1️⃣')+elem('3️⃣')+elem('5️⃣')+elem('7️⃣'),elem('🧰')+elem('🧰')+elem('🧰')][l]}
+if(k===2){return [grp('🫧',2)+'<span class="arrow">➜</span>'+grp('🫧',2),grp('🫧',3)+'<span class="arrow">➜</span>'+grp('🫧',3),grp('🫧',5)+'<span class="arrow">➜</span>'+grp('🫧',5),elem('🏺')+'<span class="arrow">➜</span>'+elem('🥛'),elem('🥛')+'<span class="arrow">➜</span>'+elem('🧪'),elem('🟣')+'<span class="arrow">➜</span>'+elem('🟪')][l]}
+return [elem('🐟','sm')+elem('🐟','lg'),elem('🐢','lg')+elem('🐢','sm'),elem('🐬','lg')+elem('🐬')+elem('🐬','sm'),elem('🪸')+elem('🐟')+elem('🫧'),elem('🚤')+elem('🛥️')+elem('⛵'),elem('🐋')+elem('🐬')+elem('🐟')+elem('🦐')][l]}
+function showQuestion(){chosen=-1;done=false;let i=level*4+step,d=DATA[i];document.getElementById('app').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="tag">${ANIMALS[level]} Nivel ${level+1} · ${level+2} años</span><span class="tag">${ICONS[step]} ${SKILLS[step]}</span></div><p class="small">Reto ${step+1} de 4 · ${WORLDS[level]}</p><div class="progress"><span style="width:${step*25}%"></span></div><h2 class="center">${escapeHtml(d.question)}</h2><div class="visual">${scene(i)}</div><div class="options" id="options">${d.options.map((o,j)=>`<button class="option" onclick="answer(${j})">${escapeHtml(o)}</button>`).join('')}</div><div id="feedback" class="feedback center" aria-live="polite">🐢 Marina: ¡Toca la respuesta que creas correcta!</div><div class="actions"><button class="btn secondary" onclick="speak(DATA[${i}].question)">🔊 Escuchar pregunta</button><button class="btn secondary" onclick="showMap()">🗺️ Volver al mapa</button><button id="next" class="btn hide" onclick="next()">Siguiente reto ➜</button></div></section>`;speak(d.question)}
+function answer(j){if(done)return;let d=DATA[level*4+step],buttons=[...document.querySelectorAll('.option')],fb=document.getElementById('feedback');buttons.forEach(b=>b.classList.remove('wrong'));if(j===d.answer){playEffect(true);done=true;completed.add(level*4+step);save();buttons[j].classList.add('right');fb.textContent='🌟 ¡Muy bien! Has conseguido una perla mágica. '+(step===2?'¡La cantidad no cambió!':'');document.getElementById('next').classList.remove('hide');speak('¡Muy bien! ¡Has conseguido una perla mágica!');confetti()}else{playEffect(false);buttons[j].classList.add('wrong');fb.textContent='🐢 ¡Vamos a intentarlo otra vez! Pista de Marina: '+d.hint;speak('Vamos a intentarlo otra vez. '+d.hint)}}
+function next(){if(step<3){step++;showQuestion()}else{let total=[0,1,2,3].filter(j=>completed.has(level*4+j)).length;document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🐢💎</div><h1>¡Nivel completado!</h1><p>Marina recuperó las cuatro perlas de <b>${WORLDS[level]}</b>.</p><div class="stars">⭐ ⭐ ⭐ ⭐</div><p>¡Clasificaste, ordenaste, exploraste transformaciones y comparaste!</p><div class="actions"><button class="btn secondary" onclick="showMap()">🗺️ Elegir nivel</button>${level<5?`<button class="btn" onclick="startLevel(${level+1})">Siguiente nivel ➜</button>`:`<button class="btn" onclick="finish()">🏆 Ver el tesoro final</button>`}</div></section>`;confetti();playVictory();speak('¡Nivel completado! ¡Excelente exploración!')}}
+function finish(){document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🏆🐢🐬</div><h1>¡Tesoro recuperado!</h1><p>¡Lo lograste, explorador del océano!</p><p>Clasificaste, ordenaste, comparaste y exploraste transformaciones.</p><div class="stars">💎 💎 💎 💎</div><div class="actions"><button class="btn" onclick="showMap()">Volver al mapa 🗺️</button><button class="btn" onclick="showDiploma()">🎓 Mi diploma</button></div><div class="note" style="margin-top:25px"><b>Para adultos:</b> Las edades son orientativas. Los retos de conservación y transitividad permiten observar y explorar el razonamiento, sin exigir un dominio lógico temprano. Se recomienda acompañar las actividades con objetos reales.</div></section>`;confetti()}
+
+// Música original generada en el navegador: no necesita descargas ni conexión.
+let audioCtx=null,musicOn=false,musicTimer=null,musicIndex=0;
+function getAudio(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx}catch(e){return null}}
+function tone(freq,duration=.18,type='sine',volume=.035,delay=0){const a=getAudio();if(!a)return;let o=a.createOscillator(),g=a.createGain(),t=a.currentTime+delay;o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.025);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+duration+.03)}
+function playEffect(ok){if(ok){tone(523,.13,'sine',.065);tone(659,.14,'sine',.06,.13);tone(784,.28,'sine',.06,.27)}else{tone(330,.15,'triangle',.035);tone(294,.22,'triangle',.03,.17)}}
+function playVictory(){[523,659,784,1047].forEach((n,i)=>tone(n,.33,'sine',.065,i*.16))}
+const melody=[392,440,523,440,392,330,349,392,523,587,659,587,523,440,392,349];
+function musicTick(){if(!musicOn)return;const n=melody[musicIndex++%melody.length];tone(n,.33,'sine',.017);if(musicIndex%4===1)tone(n/2,.5,'triangle',.009)}
+function toggleMusic(){musicOn=!musicOn;document.getElementById('music').textContent=musicOn?'🎵 Música: sí':'🎵 Música: no';if(musicOn){getAudio();musicTick();musicTimer=setInterval(musicTick,440)}else{clearInterval(musicTimer)}}
+function showDiploma(){const total=completed.size;document.getElementById('app').innerHTML=`<section class="panel center"><h1 class="no-print">🎓 ¡Tu diploma submarino!</h1><p class="no-print">Escribe el nombre del explorador y pulsa imprimir o guardar como PDF.</p><div class="no-print"><input class="nameinput" id="studentName" maxlength="45" placeholder="Nombre del explorador" oninput="updateDiploma()" aria-label="Nombre del explorador"></div><div class="diploma"><div style="font-size:64px">🐢 🪸 🐬</div><h2>Diploma de explorador submarino</h2><p>Se reconoce a</p><div class="student" id="diplomaName">¡Gran explorador!</div><p>por su curiosidad, esfuerzo y participación en</p><h2>MiniMentes: Una aventura bajo el mar</h2><p>Exploró la clasificación, seriación, conservación y transitividad.</p><div style="font-size:40px">💎 ⭐ 🐚 ⭐ 💎</div><p class="subhint">Retos completados: ${total} de 24 · Cada niño aprende a su ritmo.</p></div><div class="actions no-print"><button class="btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button><button class="btn secondary" onclick="showMap()">🗺️ Volver al mapa</button></div></section>`;playVictory();confetti()}
+function updateDiploma(){let n=document.getElementById('studentName').value.trim();document.getElementById('diplomaName').textContent=n||'¡Gran explorador!'}
+// Acceso al diploma desde cualquier nivel, sin exigir que un niño complete retos por encima de su edad.
+const oldMap=showMap;showMap=function(){oldMap();const a=document.querySelector('#app .actions');if(a)a.insertAdjacentHTML('beforeend','<button class="btn" onclick="showDiploma()">🎓 Diploma</button>')};
+const oldHome=home;home=function(){oldHome();const h=document.querySelector('.hero');if(h)h.classList.add('mascot')};
+home();
+</script></body></html>
