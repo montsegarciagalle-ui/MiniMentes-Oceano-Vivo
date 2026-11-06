@@ -7,297 +7,325 @@
 .diploma{background:linear-gradient(145deg,#fffef1,#e0fcff);border:9px double #e0b94b;border-radius:25px;padding:26px;max-width:730px;margin:18px auto;color:#126583;box-shadow:0 12px 25px #18698c25}.diploma h2{font-size:clamp(26px,5vw,44px)}.diploma .student{font-size:clamp(24px,5vw,40px);color:#c17d18;font-weight:1000;border-bottom:3px solid #e7c96e;padding:10px}.nameinput{border:3px solid #8ad7e5;border-radius:16px;padding:14px;font:inherit;font-size:18px;width:min(100%,380px)}.subhint{font-size:13px;color:#397d92}
 @media print{body{background:white!important}.top,.footer,.actions,.ocean-life,#bubbles,.bubble,.musicbtn,.no-print{display:none!important}main{padding:0;max-width:none}.panel{box-shadow:none;border:0;margin:0}.diploma{box-shadow:none;break-inside:avoid;min-height:75vh;display:flex;flex-direction:column;justify-content:center}#app>.panel>*:not(.diploma):not(.print-only){display:none!important}}
 @media(prefers-reduced-motion:reduce){.swimmer,.mascot,.sceneItem,.bubble{animation:none!important}}
-</style><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#08739b"></head><body><div id="bubbles"></div><div class="ocean-life" aria-hidden="true"><span class="swimmer" style="--top:19%;--dur:29s">🐠</span><span class="swimmer reverse" style="--top:65%;--dur:36s;animation-delay:-14s">🐬</span><span class="swimmer" style="--top:82%;--dur:43s;animation-delay:-22s">🐢</span><span class="swimmer reverse" style="--top:38%;--dur:32s;animation-delay:-7s">🐟</span></div><main><div class="top"><div class="logo">🐢 MiniMentes <span style="font-size:15px">🌊</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill musicbtn" id="music" onclick="toggleMusic()" aria-label="Activar o desactivar música">🎵 Música: no</button><button class="pill" id="sound" onclick="toggleSound()">🔊 Voz: sí</button><button class="pill" onclick="showMap()">🗺️ Mapa</button></div></div><div id="app"></div><div class="footer">Una aventura bajo el mar · Juego educativo de exploración cognitiva · 2 a 7 años<br>Actividad orientativa: cada niño aprende a su ritmo y puede recibir ayuda de una persona adulta.</div></main><div class="confetti" id="confetti"></div><script>
+</style>
+<style>
+/* MiniMentes: respuestas visuales para prelectores */
+.options{grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:16px}
+.option.picture{min-height:145px;display:flex;align-items:center;justify-content:center;padding:14px;border-width:4px;touch-action:manipulation}
+.option.picture .pic{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;width:100%;min-height:98px}
+.option.picture .pic svg{max-width:100%}
+.option.picture:focus-visible{outline:5px solid #ffbd3b;outline-offset:3px}
+.option.picture.right{background:#caffd5;border-color:#0db76d;box-shadow:0 0 0 5px #61df8a}
+.option.picture.wrong{background:#fff0dd;border-color:#f2a34b}
+.picture .emoji{font-size:clamp(37px,6vw,65px);line-height:1.2}
+.picture .tinyemoji{font-size:clamp(22px,3vw,34px);line-height:1.1}
+.picture .line{display:flex;align-items:end;justify-content:center;gap:6px;width:100%}
+.picture .stack{display:flex;flex-direction:column;align-items:center;gap:5px}
+.picture .round{border-radius:50%;border:3px solid #fff7;display:inline-block;flex-shrink:0}
+.picture .bar{display:inline-block;background:linear-gradient(120deg,#50d9a4,#119b79);border-radius:12px 12px 4px 4px}
+.picture .pearl{display:inline-block;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 32% 25%,white,#c8d7ef 70%,#829dc3);border:1px solid #91a9c9}
+.picture .cup{border:4px solid #6cb5d6;border-top:0;background:linear-gradient(to top,#67c9ec 0 var(--fill),transparent var(--fill));border-radius:4px 4px 12px 12px;display:inline-block}
+.instruction-icon{font-size:33px;vertical-align:middle}
+@media(max-width:620px){.options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.option.picture{min-height:120px;padding:7px}.option.picture .pic{min-height:90px}.picture .emoji{font-size:38px}}
+</style>
+<style>
+.visual-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:stretch;justify-items:stretch;gap:16px;padding:20px;min-height:220px}
+.visual-choices .option.picture{background:#ffffffb5;border:4px solid #70cddf;border-radius:25px;min-height:160px;box-shadow:0 5px 0 #7fcbd4}
+.visual-choices .option.picture.right{background:#aaf4c1;border-color:#10ad5c;box-shadow:0 0 0 5px #55e593}
+.visual-choices .option.picture.wrong{background:#ffe6cd;border-color:#e99b52}
+@media(max-width:600px){.visual-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}.visual-choices .option.picture{min-height:130px}}
+</style><style>.reference-shells{margin:8px auto 14px;padding:12px 20px;width:max-content;max-width:90%;border:3px solid #55b6d1;border-radius:22px;background:#fff5d6;font-size:clamp(25px,4vw,40px);letter-spacing:8px;text-align:center}</style><style>.spatial-scene{display:flex;align-items:center;justify-content:center;width:100%;gap:2px}.spatial-fish{display:inline-flex;align-items:center}.spatial-scene svg{max-width:95px!important}.visual-choices .option.picture{overflow:hidden}.visual-choices .option.picture .pic{overflow:hidden}@media(max-width:600px){.spatial-scene .emoji{font-size:38px!important}.spatial-scene svg{max-width:72px!important}}</style></head><body><div id="bubbles"></div><div class="ocean-life" aria-hidden="true"><span class="swimmer" style="--top:19%;--dur:29s">🐠</span><span class="swimmer reverse" style="--top:65%;--dur:36s;animation-delay:-14s">🐬</span><span class="swimmer" style="--top:82%;--dur:43s;animation-delay:-22s">🐢</span><span class="swimmer reverse" style="--top:38%;--dur:32s;animation-delay:-7s">🐟</span></div><main><div class="top"><div class="logo">🐢 MiniMentes <span style="font-size:15px">🌊</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill musicbtn" id="music" onclick="toggleMusic()" aria-label="Activar o desactivar música">🎵 Música: no</button><button class="pill" id="sound" onclick="toggleSound()">🔊 Voz: sí</button><button class="pill" onclick="showMap()">🗺️ Mapa</button></div></div><div id="app"></div><div class="footer">Una aventura bajo el mar · Juego educativo de exploración cognitiva · 2 a 7 años<br>Actividad orientativa: cada niño aprende a su ritmo y puede recibir ayuda de una persona adulta.</div></main><div class="confetti" id="confetti"></div><script>
 const DATA=[
   {
     "level": 0,
     "skill": 0,
-    "question": "¿Cuál de estos peces es AZUL?",
+    "question": "¿Cuál pez es azul?",
     "options": [
       "Pez azul",
       "Pez naranja",
       "Pez rosa"
     ],
-    "hint": "Mira el color de cada pez.",
+    "hint": "Mira los colores.",
     "answer": 0
   },
   {
     "level": 0,
     "skill": 1,
-    "question": "¿Cuál concha es MÁS GRANDE?",
+    "question": "¿Cuál concha es grande?",
     "options": [
       "Concha pequeña",
       "Concha grande"
     ],
-    "hint": "Compara los dos tamaños.",
+    "hint": "Busca la concha grande.",
     "answer": 1
   },
   {
     "level": 0,
     "skill": 2,
-    "question": "Hay 2 perlas. Si las separamos, ¿cuántas quedan?",
+    "question": "¿Cuál burbuja es más grande?",
     "options": [
-      "2 perlas",
-      "3 perlas",
-      "1 perla"
+      "Burbuja grande",
+      "Burbuja mediana",
+      "Burbuja pequeña"
     ],
-    "hint": "Separarlas no agrega perlas.",
+    "hint": "Busca la burbuja grande.",
     "answer": 0
   },
   {
     "level": 0,
     "skill": 3,
-    "question": "¿Cuál pez es más grande?",
+    "question": "¿Cuál pez está cerca del coral?",
     "options": [
       "Pez pequeño",
       "Pez grande"
     ],
-    "hint": "Observa los tamaños directamente.",
-    "answer": 1
+    "hint": "Busca el pez junto al coral.",
+    "answer": 0
   },
   {
     "level": 1,
     "skill": 0,
-    "question": "¿Qué dos animales son del mismo tipo?",
+    "question": "¿Dónde hay dos peces?",
     "options": [
       "Dos peces",
       "Pez y estrella",
       "Tortuga y concha"
     ],
-    "hint": "Busca dos animales iguales en su tipo.",
+    "hint": "Cuenta los peces.",
     "answer": 0
   },
   {
     "level": 1,
     "skill": 1,
-    "question": "¿Qué orden va de pequeño a grande?",
+    "question": "¿Qué algas van de pequeña a grande?",
     "options": [
       "Pequeño · mediano · grande",
       "Grande · pequeño · mediano",
       "Mediano · grande · pequeño"
     ],
-    "hint": "Comienza por el más pequeño.",
+    "hint": "Mira cómo crecen las algas.",
     "answer": 0
   },
   {
     "level": 1,
     "skill": 2,
-    "question": "3 perlas juntas se separan. ¿Cuántas hay ahora?",
+    "question": "¿Dónde hay tres conchitas?",
     "options": [
-      "4",
-      "3",
-      "2"
+      "Dos conchas",
+      "Tres conchas",
+      "Cuatro conchas"
     ],
-    "hint": "Cuenta las perlas una a una.",
+    "hint": "Cuenta las conchitas.",
     "answer": 1
   },
   {
     "level": 1,
     "skill": 3,
-    "question": "La tortuga A es grande; B es pequeña. ¿Cuál es mayor?",
+    "question": "¿Cuál tortuga está lejos del coral?",
     "options": [
       "Tortuga A",
       "Tortuga B"
     ],
-    "hint": "Primero compara dos objetos visibles.",
-    "answer": 0
+    "hint": "Busca la tortuga más alejada del coral.",
+    "answer": 1
   },
   {
     "level": 2,
     "skill": 0,
-    "question": "¿Qué grupo contiene SOLO animales marinos?",
+    "question": "¿Dónde hay solo animales del mar?",
     "options": [
       "Pez · pulpo · tortuga",
       "Pez · barco · pulpo",
       "Concha · barco · ancla"
     ],
-    "hint": "Un barco no es un animal.",
+    "hint": "Busca peces, pulpos y tortugas.",
     "answer": 0
   },
   {
     "level": 2,
     "skill": 1,
-    "question": "Ordena 4 algas por altura. ¿Qué sigue después de la pequeña?",
+    "question": "¿Qué algas van de pequeña a grande?",
     "options": [
       "La mediana pequeña",
       "La más alta",
       "La más baja"
     ],
-    "hint": "La altura aumenta poco a poco.",
+    "hint": "Mira cómo crecen.",
     "answer": 0
   },
   {
     "level": 2,
     "skill": 2,
-    "question": "5 perlas en fila y 5 perlas separadas: ¿qué grupo tiene más?",
+    "question": "¿Dónde hay cinco perlas?",
     "options": [
-      "Fila larga",
-      "Tienen igual número",
-      "Fila corta"
+      "Cinco perlas",
+      "Cuatro perlas",
+      "Tres perlas"
     ],
-    "hint": "La distancia no cambia el número.",
-    "answer": 1
+    "hint": "Cuenta una por una.",
+    "answer": 0
   },
   {
     "level": 2,
     "skill": 3,
-    "question": "A es más largo que B; B es más largo que C. ¿Cuál es el menor?",
+    "question": "¿Cuál alga es la más pequeña?",
     "options": [
       "A",
       "B",
       "C"
     ],
-    "hint": "Puedes comparar los tres dibujos.",
+    "hint": "Mira la altura de cada alga.",
     "answer": 2
   },
   {
     "level": 3,
     "skill": 0,
-    "question": "¿Cuál cumple DOS reglas: pez ROJO y PEQUEÑO?",
+    "question": "¿Cuál pez es rojo y pequeño?",
     "options": [
       "Pez rojo pequeño",
       "Pez rojo grande",
       "Pez azul pequeño"
     ],
-    "hint": "Fíjate en color Y tamaño.",
+    "hint": "Mira su color y tamaño.",
     "answer": 0
   },
   {
     "level": 3,
     "skill": 1,
-    "question": "Ordena: 2, 4, 1, 3 conchas. ¿Qué orden es creciente?",
+    "question": "¿Qué fila tiene una, dos, tres y cuatro conchas?",
     "options": [
       "1 · 2 · 3 · 4",
       "4 · 3 · 2 · 1",
       "1 · 3 · 2 · 4"
     ],
-    "hint": "De menos conchas a más conchas.",
+    "hint": "Cuenta de izquierda a derecha.",
     "answer": 0
   },
   {
     "level": 3,
     "skill": 2,
-    "question": "La misma arena pasa a un vaso alto. ¿Qué ocurre con su cantidad?",
+    "question": "Mira las cuatro conchas de arriba. ¿Dónde hay cuatro también?",
     "options": [
-      "Aumenta",
-      "No cambia",
-      "Disminuye"
+      "Tres conchitas",
+      "Cuatro conchitas separadas",
+      "Cinco conchitas"
     ],
-    "hint": "No se agregó ni quitó arena.",
+    "hint": "Cuenta las conchas.",
     "answer": 1
   },
   {
     "level": 3,
     "skill": 3,
-    "question": "Coral es mayor que Azul y Azul mayor que Perla. ¿Quién es mayor?",
+    "question": "¿Cuál ballena es la más grande?",
     "options": [
       "Perla",
       "Azul",
       "Coral"
     ],
-    "hint": "Une las dos comparaciones.",
+    "hint": "Busca la ballena más grande.",
     "answer": 2
   },
   {
     "level": 4,
     "skill": 0,
-    "question": "¿Qué conjunto es: AZUL y de forma REDONDA?",
+    "question": "¿Cuál figura es azul y redonda?",
     "options": [
       "Burbuja azul",
       "Estrella azul",
       "Burbuja roja"
     ],
-    "hint": "Hay que cumplir ambos criterios.",
+    "hint": "Mira el color y la forma.",
     "answer": 0
   },
   {
     "level": 4,
     "skill": 1,
-    "question": "¿Qué secuencia está ordenada de menor a mayor?",
+    "question": "¿Qué algas van de pequeña a grande?",
     "options": [
       "1 · 3 · 5 · 7 · 9",
       "1 · 5 · 3 · 9 · 7",
       "9 · 7 · 5 · 3 · 1"
     ],
-    "hint": "Comprueba cada paso.",
+    "hint": "Mira las alturas.",
     "answer": 0
   },
   {
     "level": 4,
     "skill": 2,
-    "question": "Dos vasos iguales tienen la misma agua. Uno se vierte a un vaso estrecho. ¿Cuál tiene más?",
+    "question": "Mira el agua del vaso. La pasamos a otro vaso. ¿Dónde está toda el agua?",
     "options": [
-      "El estrecho",
-      "El ancho",
-      "La misma cantidad"
+      "Vaso alto",
+      "Vaso ancho",
+      "Misma cantidad"
     ],
-    "hint": "La altura del agua puede engañar.",
+    "hint": "El agua no desapareció.",
     "answer": 2
   },
   {
     "level": 4,
     "skill": 3,
-    "question": "Submarino A > B y B > C en longitud. ¿Cuál es más largo?",
+    "question": "¿Cuál submarino es más largo?",
     "options": [
       "A",
       "B",
       "C"
     ],
-    "hint": "Si A supera a B y B supera a C...",
+    "hint": "Busca el submarino más largo.",
     "answer": 0
   },
   {
     "level": 5,
     "skill": 0,
-    "question": "Hay 4 peces y 2 tortugas. ¿Hay más PECES o ANIMALES?",
+    "question": "¿Qué grupo tiene peces y tortugas?",
     "options": [
       "Peces",
       "Animales",
       "Igual"
     ],
-    "hint": "Los peces también son animales.",
+    "hint": "Busca los dos animales juntos.",
     "answer": 1
   },
   {
     "level": 5,
     "skill": 1,
-    "question": "¿Cuál es el orden de 7 cofres por perlas?",
+    "question": "¿Qué algas van de pequeña a grande?",
     "options": [
       "1 · 2 · 3 · 4 · 5 · 6 · 7",
       "1 · 3 · 2 · 4 · 6 · 5 · 7",
       "7 · 6 · 5 · 4 · 3 · 2 · 1"
     ],
-    "hint": "Ordena de menor a mayor.",
+    "hint": "Mira las alturas.",
     "answer": 0
   },
   {
     "level": 5,
     "skill": 2,
-    "question": "Una bola de plastilina se aplasta sin quitar nada. ¿Tiene menos masa?",
+    "question": "Mira las 6 perlas de arriba. ¿Dónde hay 6 perlas también?",
     "options": [
-      "Sí, menos",
-      "No, la misma",
-      "Sí, más"
+      "Cinco perlas",
+      "Seis perlas separadas",
+      "Siete perlas"
     ],
-    "hint": "Solo cambió la forma.",
+    "hint": "Cuenta una por una. Aunque estén separadas, siguen siendo seis.",
     "answer": 1
   },
   {
     "level": 5,
     "skill": 3,
-    "question": "A > B, B > C y C > D. ¿Cuál es el segundo más grande?",
+    "question": "¿Cuál submarino es el segundo más largo?",
     "options": [
-      "A",
-      "B",
-      "C"
+      "Primero",
+      "Segundo",
+      "Tercero",
+      "Cuarto"
     ],
-    "hint": "Piensa en el orden A, B, C, D.",
+    "hint": "Busca primero el más largo y luego el que sigue.",
     "answer": 1
   }
 ];
 const SKILLS=['Clasificación','Seriación','Conservación','Transitividad'];
 const ICONS=['🐠','🐙','🫧','🐬'];
-const WORLDS=['La orilla del mar','El arrecife de colores','La cueva de las conchas','El bosque de algas','El barco hundido','El tesoro de las cuatro perlas'];
+const WORLDS=['Jugamos en la playa','Amigos del mar','Buscamos conchitas','El jardín marino','Exploramos el mar','El tesoro marino'];
 const ANIMALS=['🐚','🐠','🦀','🐙','🐢','🐬'];
 let sound=true,level=0,step=0,chosen=-1,done=false;
 let saved;try{saved=JSON.parse(localStorage.getItem('minimentes_progress')||'{}')}catch(e){saved={}};
@@ -317,9 +345,85 @@ function scene(i){let k=i%4,l=Math.floor(i/4);if(k===0){return [elem('🐟')+ele
 if(k===1){return [elem('🐚','sm')+elem('🐚','lg'),elem('🐚','sm')+elem('🐚')+elem('🐚','lg'),elem('🌿','sm')+elem('🌿')+elem('🌿','lg'),grp('🐚',2)+grp('🐚',4),elem('1️⃣')+elem('3️⃣')+elem('5️⃣')+elem('7️⃣'),elem('🧰')+elem('🧰')+elem('🧰')][l]}
 if(k===2){return [grp('🫧',2)+'<span class="arrow">➜</span>'+grp('🫧',2),grp('🫧',3)+'<span class="arrow">➜</span>'+grp('🫧',3),grp('🫧',5)+'<span class="arrow">➜</span>'+grp('🫧',5),elem('🏺')+'<span class="arrow">➜</span>'+elem('🥛'),elem('🥛')+'<span class="arrow">➜</span>'+elem('🧪'),elem('🟣')+'<span class="arrow">➜</span>'+elem('🟪')][l]}
 return [elem('🐟','sm')+elem('🐟','lg'),elem('🐢','lg')+elem('🐢','sm'),elem('🐬','lg')+elem('🐬')+elem('🐬','sm'),elem('🪸')+elem('🐟')+elem('🫧'),elem('🚤')+elem('🛥️')+elem('⛵'),elem('🐋')+elem('🐬')+elem('🐟')+elem('🦐')][l]}
-function showQuestion(){chosen=-1;done=false;let i=level*4+step,d=DATA[i];document.getElementById('app').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="tag">${ANIMALS[level]} Nivel ${level+1} · ${level+2} años</span><span class="tag">${ICONS[step]} ${SKILLS[step]}</span></div><p class="small">Reto ${step+1} de 4 · ${WORLDS[level]}</p><div class="progress"><span style="width:${step*25}%"></span></div><h2 class="center">${escapeHtml(d.question)}</h2><div class="visual">${scene(i)}</div><div class="options" id="options">${d.options.map((o,j)=>`<button class="option" onclick="answer(${j})">${escapeHtml(o)}</button>`).join('')}</div><div id="feedback" class="feedback center" aria-live="polite">🐢 Marina: ¡Toca la respuesta que creas correcta!</div><div class="actions"><button class="btn secondary" onclick="speak(DATA[${i}].question)">🔊 Escuchar pregunta</button><button class="btn secondary" onclick="showMap()">🗺️ Volver al mapa</button><button id="next" class="btn hide" onclick="next()">Siguiente reto ➜</button></div></section>`;speak(d.question)}
-function answer(j){if(done)return;let d=DATA[level*4+step],buttons=[...document.querySelectorAll('.option')],fb=document.getElementById('feedback');buttons.forEach(b=>b.classList.remove('wrong'));if(j===d.answer){playEffect(true);done=true;completed.add(level*4+step);save();buttons[j].classList.add('right');fb.textContent='🌟 ¡Muy bien! Has conseguido una perla mágica. '+(step===2?'¡La cantidad no cambió!':'');document.getElementById('next').classList.remove('hide');speak('¡Muy bien! ¡Has conseguido una perla mágica!');confetti()}else{playEffect(false);buttons[j].classList.add('wrong');fb.textContent='🐢 ¡Vamos a intentarlo otra vez! Pista de Marina: '+d.hint;speak('Vamos a intentarlo otra vez. '+d.hint)}}
-function next(){if(step<3){step++;showQuestion()}else{let total=[0,1,2,3].filter(j=>completed.has(level*4+j)).length;document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🐢💎</div><h1>¡Nivel completado!</h1><p>Marina recuperó las cuatro perlas de <b>${WORLDS[level]}</b>.</p><div class="stars">⭐ ⭐ ⭐ ⭐</div><p>¡Clasificaste, ordenaste, exploraste transformaciones y comparaste!</p><div class="actions"><button class="btn secondary" onclick="showMap()">🗺️ Elegir nivel</button>${level<5?`<button class="btn" onclick="startLevel(${level+1})">Siguiente nivel ➜</button>`:`<button class="btn" onclick="finish()">🏆 Ver el tesoro final</button>`}</div></section>`;confetti();playVictory();speak('¡Nivel completado! ¡Excelente exploración!')}}
+
+// Tarjetas con dibujos: las respuestas ya no dependen de saber leer.
+function fish(color,scale=1){
+ return `<svg width="${Math.round(105*scale)}" height="${Math.round(72*scale)}" viewBox="0 0 105 72" aria-hidden="true"><path d="M27 36 L5 16 Q2 36 5 56Z" fill="${color}" stroke="#36768e" stroke-width="2"/><ellipse cx="59" cy="36" rx="37" ry="25" fill="${color}" stroke="#36768e" stroke-width="2"/><path d="M43 13 L55 2 L69 14" fill="${color}" stroke="#36768e" stroke-width="2"/><circle cx="78" cy="29" r="4.5" fill="#17384e"/><circle cx="79" cy="28" r="1.4" fill="white"/><path d="M87 44 Q92 48 96 43" fill="none" stroke="#36768e" stroke-width="2"/></svg>`
+}
+function e(x,size=55){return `<span class="emoji" style="font-size:${size}px">${x}</span>`}
+function line(...x){return `<div class="line">${x.join('')}</div>`}
+function group(x,n){return `<div class="pic">${Array.from({length:n},()=>`<span class="tinyemoji">${x}</span>`).join('')}</div>`}
+function pearls(n,spaced=false){return `<div class="pic" style="gap:${spaced?'18':'3'}px">${Array.from({length:n},()=>'<span class="pearl"></span>').join('')}</div>`}
+function bars(heights){return line(...heights.map(h=>`<span class="bar" style="width:18px;height:${h}px"></span>`))}
+function circles(cols){return line(...cols.map(c=>`<span class="round" style="width:48px;height:48px;background:${c}"></span>`))}
+function fishGroup(...items){return line(...items.map(([color,size])=>fish(color,size)))}
+function cups(equal=false){return line(`<span class="cup" style="width:76px;height:76px;--fill:55%"></span>`,`<span class="cup" style="width:${equal?76:45}px;height:${equal?76:110}px;--fill:${equal?55:75}%"></span>`)}
+const PICTURES=[
+ [fish('#3d9ce7'),fish('#ff9d36'),fish('#f28abf')],
+ [e('🐚',37),e('🐚',95)],
+ [pearls(2,true),pearls(3),pearls(1)],
+ [fish('#e4a553',.65),fish('#e4a553',1.1)],
+ [group('🐠',2),line(e('🐠',44),e('⭐',44)),line(e('🐢',44),e('🐚',44))],
+ [bars([25,48,75]),bars([75,25,48]),bars([48,75,25])],
+ [pearls(4),pearls(3,true),pearls(2)],
+ [e('🐢',90),e('🐢',45)],
+ [line(e('🐠',39),e('🐙',39),e('🐢',39)),line(e('🐠',39),e('🚢',39),e('🐙',39)),line(e('🚗',39),e('🐚',39),e('🐠',39))],
+ [bars([45,65]),bars([100]),bars([25])],
+ [pearls(5,true),line(e('🟰',65)),pearls(5)],
+ [bars([105]),bars([70]),bars([35])],
+ [fish('#f04747',.6),fish('#f04747',1.05),fish('#288de0',.65)],
+ [group('🐚',1)+group('🐚',2)+group('🐚',3)+group('🐚',4),group('🐚',4)+group('🐚',3)+group('🐚',2)+group('🐚',1),group('🐚',2)+group('🐚',4)+group('🐚',1)+group('🐚',3)],
+ [line(e('⬆️',60),e('🏖️',55)),line(e('🟰',65),e('🏖️',55)),line(e('⬇️',60),e('🏖️',55))],
+ [e('🐳',42),e('🐳',65),e('🐳',94)],
+ [circles(['#2998ef']),line(e('⭐',74)),circles(['#f66b5d'])],
+ [bars([25,40,55,70,85]),bars([25,55,40,85,70]),bars([85,70,55,40,25])],
+ [line(`<span class="cup" style="width:40px;height:105px;--fill:75%"></span>`),line(`<span class="cup" style="width:85px;height:70px;--fill:55%"></span>`),line(e('🟰',65),e('💧',45))],
+ [bars([95]),bars([65]),bars([35])],
+ [group('🐠',4),line(group('🐠',4),group('🐢',2)),group('🐢',2)],
+ [bars([17,27,37,47,57,67,77]),bars([17,37,27,47,67,57,77]),bars([77,67,57,47,37,27,17])],
+ [e('🟠',55)+e('⬇️',36),line(e('🟠',55),e('🟰',55)),e('🟠',40)],
+ [bars([110]),bars([88]),bars([65]),bars([43])]
+];
+
+// Dibujos nuevos, con situaciones completas y respuestas que se pueden tocar.
+function bubbleSize(sz){return `<span class="round" style="width:${sz}px;height:${sz}px;background:radial-gradient(circle at 30% 25%,#fff,#8fe8ff 48%,#42aee4);border:3px solid #78bde0"></span>`}
+function jar(w,h,fill){return `<span class="cup" style="width:${w}px;height:${h}px;--fill:${fill}%"></span>`}
+function clay(shape){return shape==='ball'?`<span class="round" style="width:65px;height:65px;background:#b57ae6"></span>`:`<span style="width:95px;height:24px;background:#b57ae6;border-radius:50%;display:inline-block"></span>`}
+function orderedShells(nums){return line(...nums.map(n=>`<span style="display:flex;flex-direction:column;align-items:center">${Array.from({length:n},()=>'<span style="font-size:18px">🐚</span>').join('')}</span>`))}
+PICTURES[2]=[bubbleSize(86),bubbleSize(56),bubbleSize(32)];
+PICTURES[6]=[group('🐚',2),group('🐚',3),group('🐚',4)];
+PICTURES[9]=[bars([30,55,82]),bars([82,30,55]),bars([55,82,30])];
+PICTURES[10]=[pearls(5,true),pearls(4),pearls(3)];
+PICTURES[11]=[bars([95]),bars([65]),bars([35])];
+PICTURES[13]=[orderedShells([1,2,3,4]),orderedShells([4,3,2,1]),orderedShells([1,3,2,4])];
+PICTURES[14]=[group('🐚',3),`<div class="pic" style="gap:20px">${Array.from({length:4},()=>'<span class="tinyemoji">🐚</span>').join('')}</div>`,group('🐚',5)];
+PICTURES[15]=[e('🐳',45),e('🐳',65),e('🐳',95)];
+PICTURES[17]=[bars([25,40,55,70,85]),bars([25,55,40,85,70]),bars([85,70,55,40,25])];
+PICTURES[18]=[line(jar(45,105,78)),line(jar(85,72,58)),line(jar(45,105,78),e('🟰',35),jar(85,72,58))];
+PICTURES[19]=[bars([108]),bars([75]),bars([43])];
+PICTURES[20]=[group('🐠',4),line(group('🐠',4),group('🐢',2)),group('🐢',2)];
+PICTURES[21]=[bars([17,27,37,47,57,67,77]),bars([17,37,27,47,67,57,77]),bars([77,67,57,47,37,27,17])];
+PICTURES[22]=[pearls(5),pearls(6,true),pearls(7)];
+PICTURES[23]=[bars([110]),bars([88]),bars([65]),bars([43])];
+
+
+// Dibujos que representan directamente cada pregunta.
+function coralFish(near){return `<div class="spatial-scene">${e('🪸',52)}<span class="spatial-fish" style="margin-left:${near?4:62}px">${fish('#f4b53b',.55)}</span></div>`}
+function coralTurtle(near){return `<div class="spatial-scene">${e('🪸',48)}<span style="margin-left:${near?2:55}px">${e('🐢',45)}</span></div>`}
+function sub(length){return `<svg viewBox="0 0 155 75" width="145" height="90" aria-hidden="true"><rect x="${(155-length)/2}" y="29" width="${length}" height="31" rx="16" fill="#ffcf50" stroke="#ba8d22" stroke-width="3"/><rect x="69" y="14" width="18" height="19" rx="4" fill="#ffa849" stroke="#ba8d22" stroke-width="3"/><circle cx="${(155-length)/2+24}" cy="44" r="9" fill="#7ed5f2" stroke="#287d9c" stroke-width="3"/><path d="M${(155+length)/2-12} 28l12 -12v55l-12 -12" fill="#ffa849" stroke="#ba8d22" stroke-width="2"/></svg>`}
+PICTURES[3]=[coralFish(true),coralFish(false)];
+PICTURES[4]=[group('🐠',2),group('🐠',3),group('🐠',1)];
+PICTURES[7]=[coralTurtle(true),coralTurtle(false)];
+PICTURES[16]=[circles(['#2998ef']),e('⭐',65),circles(['#f66b5d'])];
+PICTURES[18]=[line(jar(45,105,35)),line(jar(85,72,35)),line(jar(45,105,78),e('➡️',25),jar(85,72,58))];
+PICTURES[19]=[sub(125),sub(95),sub(65)];
+PICTURES[23]=[sub(125),sub(100),sub(75),sub(50)];
+
+function pictureOptions(i){return DATA[i].options.map((_,j)=>`<button type="button" class="option picture" onclick="answer(${j})" aria-label="Opción ${j+1}" title="Opción ${j+1}"><span class="pic">${PICTURES[i][j]||e('❓')}</span></button>`).join('')}
+
+function showQuestion(){chosen=-1;done=false;let i=level*4+step,d=DATA[i];document.getElementById('app').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="tag">${ANIMALS[level]} Nivel ${level+1} · ${level+2} años</span><span class="tag">${ICONS[step]} ${SKILLS[step]}</span></div><p class="small">Reto ${step+1} de 4 · ${WORLDS[level]}</p><div class="progress"><span style="width:${step*25}%"></span></div><h2 class="center">${escapeHtml(d.question)}</h2>${i===14?'<div class="reference-shells" aria-label="Cuatro conchitas de ejemplo">🐚 🐚 🐚 🐚</div>':i===22?'<div class="reference-shells" aria-label="Seis perlas de ejemplo">⚪ ⚪ ⚪ ⚪ ⚪ ⚪</div>':''}<div class="visual visual-choices" id="options" role="group" aria-label="Toca el dibujo que responde la pregunta">${pictureOptions(i)}</div><div id="feedback" class="feedback center" aria-live="polite">🐢 ¡Toca el dibujo que creas correcto!</div><div class="actions"><button class="btn secondary" onclick="speak(DATA[${i}].question)">🔊 Escuchar</button><button class="btn secondary" onclick="showMap()">🗺️ Volver al mapa</button><button id="next" class="btn hide" onclick="next()">Siguiente reto ➜</button></div></section>`;speak(d.question)}
+function answer(j){if(done)return;let d=DATA[level*4+step],buttons=[...document.querySelectorAll('.visual-choices .option')],fb=document.getElementById('feedback');buttons.forEach(b=>b.classList.remove('wrong'));if(j===d.answer){playEffect(true);done=true;completed.add(level*4+step);save();buttons[j].classList.add('right');fb.textContent='🌟 ¡Muy bien! Has conseguido una perla mágica. ';document.getElementById('next').classList.remove('hide');speak('¡Muy bien! ¡Has conseguido una perla mágica!');confetti()}else{playEffect(false);buttons[j].classList.add('wrong');fb.textContent='🐢 ¡Vamos a intentarlo otra vez! Pista de Marina: '+d.hint;speak('Vamos a intentarlo otra vez. '+d.hint)}}
+function next(){if(step<3){step++;showQuestion()}else{let total=[0,1,2,3].filter(j=>completed.has(level*4+j)).length;document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🐢💎</div><h1>¡Nivel completado!</h1><p>Marina recuperó las cuatro perlas de <b>${WORLDS[level]}</b>.</p><div class="stars">⭐ ⭐ ⭐ ⭐</div><p>¡Miraste, contaste y encontraste las respuestas!</p><div class="actions"><button class="btn secondary" onclick="showMap()">🗺️ Elegir nivel</button>${level<5?`<button class="btn" onclick="startLevel(${level+1})">Siguiente nivel ➜</button>`:`<button class="btn" onclick="finish()">🏆 Ver el tesoro final</button>`}</div></section>`;confetti();playVictory();speak('¡Nivel completado! ¡Excelente exploración!')}}
 function finish(){document.getElementById('app').innerHTML=`<section class="panel center"><div class="hero">🏆🐢🐬</div><h1>¡Tesoro recuperado!</h1><p>¡Lo lograste, explorador del océano!</p><p>Clasificaste, ordenaste, comparaste y exploraste transformaciones.</p><div class="stars">💎 💎 💎 💎</div><div class="actions"><button class="btn" onclick="showMap()">Volver al mapa 🗺️</button><button class="btn" onclick="showDiploma()">🎓 Mi diploma</button></div><div class="note" style="margin-top:25px"><b>Para adultos:</b> Las edades son orientativas. Los retos de conservación y transitividad permiten observar y explorar el razonamiento, sin exigir un dominio lógico temprano. Se recomienda acompañar las actividades con objetos reales.</div></section>`;confetti()}
 
 // Música original generada en el navegador: no necesita descargas ni conexión.
